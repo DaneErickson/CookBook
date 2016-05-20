@@ -59,4 +59,7 @@ recipeSchema.methods.addIngredient = function(ingredient,amount){
   });
 }
 
-module.exports = mongoose.model('Recipe', recipeSchema);
+module.exports = {
+  Schema : recipeSchema,
+  Model  : mongoose.model('Recipe', recipeSchema),
+}
