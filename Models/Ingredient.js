@@ -14,9 +14,18 @@ const ingredientSchema = mongoose.Schema({
   },
 });
 
+// param amount, the amount { unit: X, quantity: Y } of the ingredient
+// returns the nutrition document corresponding to the amount of nutrition in
+//    that amount of the given ingredient.
 ingredientSchema.methods.getNutrients = function(amount){
   var multiplier = unit.ratio(amount.unit, this.unit);
   return this.nutrition.scale(multiplier);
+}
+
+// param nutrition, a nutrition document detailing the nutrients of the given
+//    ingredient.
+ingredientSchema.methods.setNutrients = function(nutrition){
+  this.nutrition = nutrition;
 }
 
 ingredientSchema.methods.toString = function(){
