@@ -27,7 +27,7 @@ recipeSchema.methods.getNutrients(){
   if (this.ingredients.length === 0){
     return new ingredientModel({});
   }
-  var nutrients = this.ingredients[0];
+  var nutrients = this.ingredients[0].getNutrients(this.ingredients[0].amount);
   for(var i = 1, i<this.ingredients.length; i++){
     nutrients = nutritionModel.sum(nutrients,this.ingredients[i]);
   }

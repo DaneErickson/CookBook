@@ -18,26 +18,36 @@ function sum(amount1, amount2){
 function convert(amount, unit2){
   // gist of function: new_unit = unit2,
   //                   new_quantity = unit2/unit1 * old_quantity
-
   var unit1 = amount.unit;
-  // units must either both be dry, or both be wet.
-  if (!(isWetUnit(unit1) === isWetUnit(unit2) &&
-        isDryUnit(unit1) === isDryUnit(unit2))){
-        throw new Error('units must be convertible to each other');
-      }
-  var multiplier;
-  if (isWetUnit(unit1)){
-    // unit2/unit1 = (mL/unit1)/(mL/unit2)
-    multiplier = mLPerUnit(unit1)/mLPerUnit(unit2);
-  }
-  else {
-    // unit2/unit1 = (g/unit1)/(g/unit2)
-    multiplier = gPerUnit(unit1)/gPerUnit(unit2);
-  }
+  var multiplier = ratio(unit1,unit2);
+
   var _amount = {
     unit     : unit2,
     quantity : amount.quantity * multiplier,
   }
+}
+
+
+// returns ratio: unit2/unit1
+function ratio(unit1, unit2){
+  if (!(isWetUnit(unit1) === isWetUnit(unit2) &&
+        isDryUnit(unit1) === isDryUnit(unit2))){
+          throw new Error('units must be convertible to each other');
+        }
+  var ratio;
+  if (isWetUnit(unit1)){
+    // unit2/unit1 = (mL/unit1)/(mL/unit2)
+    multiplier = mLPerUnit(unit1)/mLPerUnit(unit2);
+  }
+  else if (isDryUnit(unit1)){
+    // unit2/unit1 = (g/unit1)/(g/unit2)
+    multiplier = gPerUnit(unit1)/gPerUnit(unit2);
+  }
+  else {
+    throw new Error('inappropriate units given');
+  }
+
+  return multiplier
 }
 
 function mLPerUnit(unit){
@@ -83,4 +93,5 @@ module.exports = {
   scale,
   sum,
   convert,
+  ratio,
 }
