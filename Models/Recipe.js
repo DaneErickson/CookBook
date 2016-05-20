@@ -11,16 +11,16 @@ const nutritionModel   = require('./Nutrition.js').Model;
 
 const recipeSchema = mongoose.Schema({
   author      : {
-    name        : String,
-    email       : String,
-  },
+                  name   : String,
+                  email  : String,
+                },
   steps       : [{
-    type : Schema.Types.ObjectId,
-    ref  : 'Step',
-  }],
+                    type : Schema.Types.ObjectId,
+                    ref  : 'Step',
+                }],
   ingredients : [{ingredient : {
                     type : Schema.Types.ObjectId,
-                    ref  : 'Nutrition',
+                    ref  : 'Ingredient',
                   },
                   amount: { quantity: { type: Number, default: 0 },
                             unit    : { type: String, default: 'g' }},
