@@ -1,13 +1,17 @@
+"use strict";
 const mongoose        = require('mongoose');
 const Schema          = mongoose.Schema;
-const nutritionSchema = require('./nutritionSchema');
+const nutritionSchema = require('./Nutrition.js');
 
 
 const ingredientSchema = mongoose.Schema({
   type      : String,
   amount: { quantity: { type: Number, default: 0 },
             unit    : { type: String, default: 'g' }},
-  nutrition : nutritionSchema,
+  nutrition : {
+    type : Schema.Types.ObjectId,
+    ref  : 'Nutrition',
+  },
 });
 
 ingredientSchema.methods.getNutrients = function(amount){
@@ -21,5 +25,5 @@ ingredientSchema.methods.toString = function(){
 
 mongoose.exports = {
   Schema : ingredientSchema,
-  Model  : mongoose.model('Ingredient',ingredientSchema);
+  Model  : mongoose.model('Ingredient',ingredientSchema),
 }

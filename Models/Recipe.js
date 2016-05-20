@@ -1,3 +1,4 @@
+"use strict";
 const mongoose = require('mongoose');
 const Schema   = mongoose.Schema;
 
@@ -13,8 +14,14 @@ const recipeSchema = mongoose.Schema({
     name        : String,
     email       : String,
   },
-  steps       : [stepSchema],
-  ingredients : [{ingredient : ingredientSchema,
+  steps       : [{
+    type : Schema.Types.ObjectId,
+    ref  : 'Step',
+  }],
+  ingredients : [{ingredient : {
+                    type : Schema.Types.ObjectId,
+                    ref  : 'Nutrition',
+                  },
                   amount: { quantity: { type: Number, default: 0 },
                             unit    : { type: String, default: 'g' }},
                 }],
@@ -23,12 +30,12 @@ const recipeSchema = mongoose.Schema({
 // returns a json object representing all the nutrients in the recipe.
 // TODO improvements: divide & conquer, recursively sum over left half,
 //                    over right half, then combine.
-recipeSchema.methods.getNutrients(){
+recipeSchema.methods.getNutrients = function(){
   if (this.ingredients.length === 0){
     return new ingredientModel({});
   }
   var nutrients = this.ingredients[0].getNutrients(this.ingredients[0].amount);
-  for(var i = 1, i<this.ingredients.length; i++){
+  for(var i = 1; i<this.ingredients.length; i++){
     nutrients = nutritionModel.sum(nutrients,this.ingredients[i]);
   }
   return nutrients;
