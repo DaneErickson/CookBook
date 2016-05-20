@@ -15,6 +15,10 @@ ingredientSchema.methods.getNutrients = function(amount){
   return this.nutrition.scale(multiplier);
 }
 
+ingredientSchema.methods.toString = function(){
+  return  this.type + ": " + this.amount.quantity + " " + this.amount.unit +".";
+}
+
 mongoose.exports = {
   Schema : ingredientSchema,
   Model  : mongoose.model('Ingredient',ingredientSchema);
