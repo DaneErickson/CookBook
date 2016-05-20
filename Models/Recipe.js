@@ -11,8 +11,8 @@ const nutritionModel   = require('./Nutrition.js').Model;
 
 const recipeSchema = mongoose.Schema({
   author      : {
-                  name   : String,
-                  email  : String,
+                    name   : String,
+                    email  : String,
                 },
   steps       : [{
                     type : Schema.Types.ObjectId,
