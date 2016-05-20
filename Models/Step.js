@@ -6,7 +6,7 @@ const stepSchema = mongoose.Schema({
   step : String,
 });
 
-mongoose.exports = {
+module.exports = {
   Schema : stepSchema,
   Model  : mongoose.model('Step', stepSchema),
 }
