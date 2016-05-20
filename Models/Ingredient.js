@@ -24,10 +24,12 @@ ingredientSchema.methods.getNutrients = function(amount){
 
 // param nutrition, a nutrition document detailing the nutrients of the given
 //    ingredient.
+// sets the nutrition of this ingredient to be the parameter nutrition.
 ingredientSchema.methods.setNutrients = function(nutrition){
   this.nutrition = nutrition;
 }
 
+// returns a string representing the given ingredient.
 ingredientSchema.methods.toString = function(){
   return  this.type + ": " + this.amount.quantity + " " + this.amount.unit +".";
 }
