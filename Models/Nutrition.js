@@ -80,7 +80,8 @@ const nutritionSchema = mongoose.Schema({
 
 const model = mongoose.model('Nutrition',nutritionSchema);
 
-// returns a json object of the nutrients
+// param multiplier: the factor to scale nutrients by.
+// returns a new Nutrition document, with each nutrient scaled by the multiplier.
 nutritionSchema.methods.scale = function(multiplier){
   var _nutrients     = new model({});
   var microNutrients = Object.keys(this.nutrients);
@@ -93,7 +94,8 @@ nutritionSchema.methods.scale = function(multiplier){
   return _nutrients;
 }
 
-// returns a json object of the sum of the two nutrients
+// param nutrients1, nutrients2 - the nutrient documents to add together.
+// returns a nutrition document representing the sum of the two nutrients
 nutritionSchema.statics.sum = function(nutrients1, nutrients2){
   "use strict";
   var _nutrients     = new model({});
